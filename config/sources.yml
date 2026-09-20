@@ -1,0 +1,28 @@
+# Which role the digest is for: profiles/<name>.yml holds the role's regexes
+# and the page title. Ships with `product` and `frontend`.
+profile: backend
+
+tg_folder_name: vacancy
+
+# Lines some channels append to every post — a row of navigation links, an
+# ad for a bot. Regexes; a matching line is skipped when the title, fields
+# and description are read (the full post is still shown as is).
+ignore_lines: []
+
+# Initial backfill window (days). Subsequent runs are incremental.
+initial_backfill_days: 30
+
+# Vacancies older than this move to the Archive tab.
+archive_after_days: 30
+
+# Vacancies older than this are dropped from the store for good. Nothing else
+# deletes them, so without this the page grows without limit. Must be larger
+# than archive_after_days, or the Archive tab has nothing to show.
+purge_after_days: 90
+
+# A post is marked NEW if it appeared within this window (hours).
+new_window_hours: 24
+
+# GoatCounter site name for visit/click stats, i.e. the "xxx" of
+# xxx.goatcounter.com. Empty means no analytics script on the page at all.
+goatcounter_site: "tgdigest"

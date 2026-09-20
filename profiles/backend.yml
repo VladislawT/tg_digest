@@ -1,0 +1,146 @@
+# Backend jobs. Профиль для дайджеста бэкенд-вакансий.
+# Скопирован по образцу profiles/product.yml.
+#
+# Regexes are compiled with IGNORECASE and UNICODE, so \b works on Cyrillic.
+# Russian nouns decline, hence the (?:а|у|ом|…)? endings.
+
+site:
+  title: Backend jobs
+  tagline: from Telegram
+
+roles:
+  # A post is looked at only if it names the role somewhere in the text.
+  # These spellings name a Backend role and nothing else.
+  patterns:
+    # --- Русские написания ---
+    - '\bбэкенд(?:а|у|ом|е|ы|ов|ам|ами|ах)?\b'
+    - '\bбекенд(?:а|у|ом|е|ы|ов|ам|ами|ах)?\b'
+    - '\bбэк[- ]?енд(?:а|у|ом|е|ы|ов|ам|ами|ах)?\b'
+    - '\bбэкенд[- ]?разработчик(?:а|у|ом|е|и|ов|ам|ами|ах)?\b'
+    - '\bбекенд[- ]?разработчик(?:а|у|ом|е|и|ов|ам|ами|ах)?\b'
+    - '\bразработчик(?:а|у|ом|е|и|ов|ам|ами|ах)?\s+бэкенд(?:а|у|ом|е|ы|ов|ам|ами|ах)?\b'
+    - '\bразработчик(?:а|у|ом|е|и|ов|ам|ами|ах)?\s+бекенд(?:а|у|ом|е|ы|ов|ам|ами|ах)?\b'
+    - '\bсерверн(?:ый|ого|ому|ым|ом|ые|ых|ыми)\s+(?:разработчик|инженер)(?:а|у|ом|е|и|ов|ам|ами|ах)?\b'
+    - '\bинженер(?:а|у|ом|е|ы|ов|ам|ами|ах)?\s+бэкенд(?:а|у|ом|е|ы|ов|ам|ами|ах)?\b'
+
+    # --- Английские написания ---
+    - '\bback[- ]?end(?:s)?\b'
+    - '\bback[- ]?end\s+(?:developer|engineer|dev|programmer)s?\b'
+    - '\b(?:developer|engineer|dev|programmer)s?\s+back[- ]?end\b'
+    - '\bserver[- ]?side\s+(?:developer|engineer|dev)s?\b'
+    - '\bserver\s+(?:developer|engineer)s?\b'
+
+    # --- Языки и фреймворки, которые почти всегда означают бэкенд ---
+    - '\bpython[- ]?(?:developer|engineer|dev|разработчик|девелопер)(?:а|у|ом|е|и|ов|ам|ами|ах)?\b'
+    - '\bразработчик(?:а|у|ом|е|и|ов|ам|ами|ах)?\s+python\w*\b'
+    - '\bdjango\s+(?:developer|engineer|dev)s?\b'
+    - '\bflask\s+(?:developer|engineer|dev)s?\b'
+    - '\bfastapi\s+(?:developer|engineer|dev)s?\b'
+    - '\bphp[- ]?(?:developer|engineer|dev)s?\b'
+    - '\b(?:java|kotlin|scala)\s+(?:developer|engineer|dev)s?\b'
+    - '\b(?:golang|go)\s+(?:developer|engineer|dev)s?\b'
+    - '\b(?:node\.?js|nodejs|nestjs)\s+(?:developer|engineer|dev)s?\b'
+    - '\b(?:ruby|rails)\s+(?:developer|engineer|dev)s?\b'
+    - '\b(?:c#|\.net|asp\.net)\s+(?:developer|engineer|dev)s?\b'
+    - '\brust\s+(?:developer|engineer|dev)s?\b'
+    - '\belixir\s+(?:developer|engineer|dev)s?\b'
+
+  # Abbreviations that mean this role as often as another one.
+  # They let a post in, but do not name its role: the title decides.
+  loose:
+    - '(?<!\w)\b(?:be|бэ)\b(?!\w)'
+    - '(?<!\w)\b(?:swe|sde)\b(?!\w)'
+
+  # Inside a roundup post, a headline with one of these words is one of ours.
+  hint:
+    - 'бэкенд|бекенд|бэк[- ]?енд|backend|серверн|python|django|flask|fastapi|php|java|golang|node|ruby|rails|api|микросервис'
+
+  # Spellings `patterns` do not cover, checked on the title alone.
+  title_extra:
+    - 'разработчик\w*\s+(?:api|бэкенд|backend|серверн)\w*'
+    - 'инженер\w*\s+(?:api|бэкенд|backend|серверн)\w*'
+    - 'api\s+(?:developer|engineer|разработчик)'
+    - 'backend\s+(?:developer|engineer|разработчик)'
+    - 'ведущий\s+(?:python|php|java|golang|go)\w*\s+разработчик\w*'
+    - 'главный\s+(?:python|php|java|golang|go)\w*\s+разработчик\w*'
+
+  # Neighbouring roles. A post can mention "backend" in passing while hiring
+  # one of these; a title naming one, and no role of ours, drops the card.
+  exclude:
+    # Frontend и всё, что к нему относится
+    - 'front[- ]?end|фронт[- ]?енд|верстальщик|\breact\b|\breact\.?js\b|\bvue\b|\bangular\b|\bsvelte\b|\bnext\.?js\b|\bnuxt\b|\bsolid\.?js\b|\bremix\b'
+    # Мобильная и десктопная разработка
+    - 'android|\bios\b|swift|flutter|react\s+native|mobile\s+(?:developer|engineer)|мобильн\w+\s+разработчик|desktop'
+    # QA, DevOps, SRE, данные, ML
+    - '\ba?qa\b|тестировщик|автотест|test\s+automation|devops|\bsre\b|data\s+engineer|ml\s+engineer|data\s+scientist|аналитик\s+данных|системн\w+\s+администратор'
+    # Дизайн
+    - 'designer|дизайнер|ux/ui|ui/ux'
+    # Менеджмент и рекрутинг
+    - 'product\s*manager|продакт|project\s*manager|проджект|менеджер\w*\s+проект\w*|аналитик\b|analyst|recruiter|рекрутер'
+    # Embedded, C/C++ низкий уровень
+    - 'embedded|микроконтроллер|arm\s*cortex|\bspdk\b|\bdpdk\b|linux\s+kernel'
+
+# Spellings of a level that are specific to this role.
+grades_extra:
+  Head: 'head of (?:back\w*|engineering)|chief technology officer|\bcto\b|vp,? (?:of )?engineering|директор по разработк\w*|руководител\w+ разработк\w*'
+  Lead: 'tech\s*lead|техлид|тимлид|team\s*lead|tech\s*lead|архитектор|architect|ведущий разработчик|главный разработчик'
+
+# Each tag is a flag on the card and a toggle in the filters.
+tags:
+  - key: python
+    label: Python
+    pattern: '\bpython\w*|\bпитон\w*|\bпайтон\w*'
+  - key: django
+    label: Django
+    pattern: '\bdjango\b|\bджанго\b|\bdrf\b|django\s*rest\s*framework'
+  - key: fastapi
+    label: FastAPI
+    pattern: '\bfastapi\b|\bфастапи\b'
+  - key: flask
+    label: Flask
+    pattern: '\bflask\b|\bфласк\b'
+  - key: php
+    label: PHP
+    pattern: '\bphp\b|\blaravel\b|\bsymfony\b|\byii\b|bitrix|битрикс'
+  - key: java
+    label: Java
+    pattern: '\bjava\b|\bspring\b|\bkotlin\b|\bscala\b'
+  - key: go
+    label: Go
+    pattern: '\bgolang\b|\bgo\b'
+  - key: node
+    label: Node.js
+    pattern: '\bnode\.?js\b|\bnodejs\b|\bnestjs\b|\bexpress\b'
+  - key: dotnet
+    label: .NET
+    pattern: '\bc#\b|\.net\b|asp\.net\b'
+  - key: ruby
+    label: Ruby
+    pattern: '\bruby\b|\brails\b'
+  - key: rust
+    label: Rust
+    pattern: '\brust\b'
+  - key: sql
+    label: SQL
+    pattern: '\bsql\b|\bpostgres(?:ql)?\b|\bpostgres\b|\bmysql\b|\bmariadb\b|\boracle\b|\bmssql\b|\bclickhouse\b'
+  - key: nosql
+    label: NoSQL
+    pattern: '\bmongo\w*|\bredis\b|\bcassandra\b|\belasticsearch\b|\bopensearch\b|\bqdrant\b|\bmilvus\b'
+  - key: kafka
+    label: Kafka
+    pattern: '\bkafka\b|\brabbitmq\b|\bnats\b|\bredpanda\b'
+  - key: docker
+    label: Docker/K8s
+    pattern: '\bdocker\b|\bkubernetes\b|\bk8s\b|\bhelm\b'
+  - key: microservices
+    label: Микросервисы
+    pattern: 'микросервис\w*|\bmicroservices?\b'
+  - key: grpc
+    label: gRPC
+    pattern: '\bgrpc\b|\bprotobuf\b'
+  - key: rest
+    label: REST API
+    pattern: '\brest\b|\brestful\b|\brest\s*api\b'
+  - key: ml_ai
+    label: ML/AI
+    pattern: '\bml\b|\bai\b|\bllm\b|\bgpt\b|\bnlp\b|ml[- ]?(?:ops|engineer|инженер)|ai[- ]?(?:developer|engineer|инженер)|машинн\w+ обучени\w*|искусственн\w+ интеллект\w*|нейросет\w*|langchain|rag\b'

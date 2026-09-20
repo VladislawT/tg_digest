@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ site.title }}, {{ site.tagline }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700;8..60,900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/style.css?v={{ asset_v }}">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <span class="masthead-kicker mono">
+      <span class="live-dot"></span>TG&nbsp;DIGEST
+    </span>
+    <span class="masthead-date mono">{{ generated_at[:4] }} · {{ generated_at[5:7] }} · {{ generated_at[8:10] }}</span>
+  </div>
+  <h1 class="page-title">{{ site.title }}, <em>{{ site.tagline }}</em></h1>
+  <div class="masthead-search">
+    <span class="masthead-search-icon" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="6.5" cy="6.5" r="4.2"/>
+        <line x1="9.6" y1="9.6" x2="14" y2="14" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <input
+      type="search"
+      id="search-input"
+      class="masthead-search-input"
+      placeholder="Search vacancies…"
+      autocomplete="off"
+    >
+  </div>
+  <div class="masthead-dateline mono">
+    Updated {{ generated_at[:10] }} · {{ generated_at[11:16] }} UTC
+  </div>
+</header>
+
+<div class="controls">
+
+<nav class="tabs" aria-label="Временной период">
+  <button class="tab is-active" data-tab="24h" type="button" aria-pressed="true" title="За 24 часа до последнего обновления">24ч <span class="tab-count mono" data-count="24h">0</span></button>
+  <button class="tab" data-tab="7d" type="button" aria-pressed="false">7 дней <span class="tab-count mono" data-count="7d">0</span></button>
+  <button class="tab" data-tab="30d" type="button" aria-pressed="false">30 дней <span class="tab-count mono" data-count="30d">0</span></button>
+  <button class="tab" data-tab="archive" type="button" aria-pressed="false">Архив <span class="tab-count mono" data-count="archive">0</span></button>
+</nav>
+
+<div class="filter-dropdown filter-dropdown--period" data-filter="period">
+  <button class="filter-trigger" type="button">
+    <span class="filter-label mono">ПЕРИОД</span>
+    <span class="filter-value">24ч</span>
+    <span class="filter-caret">▾</span>
+  </button>
+  <div class="filter-popover">
+    <button class="popover-item is-active" data-value="24h">24ч</button>
+    <button class="popover-item" data-value="7d">7 дней</button>
+    <button class="popover-item" data-value="30d">30 дней</button>
+    <button class="popover-item" data-value="archive">Архив</button>
+  </div>
+</div>
+
+<div class="filter-dropdown filter-dropdown--filters">
+  <button class="filter-trigger filters-toggle" id="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-inline">
+    <span class="filter-label mono">☰</span>
+    <span class="filter-value">Фильтры</span>
+    <span class="filters-count mono" id="filters-count" hidden></span>
+    <span class="filter-caret">▾</span>
+  </button>
+</div>
+
+<div class="filters-inline" id="filters-inline" role="dialog" aria-modal="true" aria-label="Фильтры вакансий">
+  <div class="filter-dropdown" data-filter="location">
+    <button class="filter-trigger" type="button">
+      <span class="filter-label mono">ЛОКАЦИЯ</span>
+      <span class="filter-value">Все</span>
+      <span class="filter-caret">▾</span>
+    </button>
+    <div class="filter-popover">
+      <button class="popover-item is-active" data-value="all">Все</button>
+      <button class="popover-item" data-value="moscow">Москва</button>
+      <button class="popover-item" data-value="spb">СПб</button>
+      <button class="popover-item" data-value="regions">Регионы РФ</button>
+      <button class="popover-item" data-value="abroad">За рубежом</button>
+      <button class="popover-item" data-value="remote">Remote</button>
+    </div>
+  </div>
+
+  <div class="filter-dropdown" data-filter="grade">
+    <button class="filter-trigger" type="button">
+      <span class="filter-label mono">ГРЕЙД</span>
+      <span class="filter-value">Все</span>
+      <span class="filter-caret">▾</span>
+    </button>
+    <div class="filter-popover">
+      <button class="popover-item is-active" data-value="all">Все</button>
+      <button class="popover-item" data-value="Head">Head</button>
+      <button class="popover-item" data-value="Lead">Lead</button>
+      <button class="popover-item" data-value="Senior">Senior</button>
+      <button class="popover-item" data-value="Middle">Middle</button>
+      <button class="popover-item" data-value="Junior">Junior</button>
+    </div>
+  </div>
+
+{%- for tag in tags %}
+  <label class="filter-toggle">
+    <input type="checkbox" data-tag="{{ tag.key }}">
+    <span class="mono">Только {{ tag.label }}</span>
+  </label>
+{%- endfor %}
+
+  <button class="reset-btn" hidden type="button">× Сбросить</button>
+</div>
+
+<div class="filter-dropdown filter-dropdown--sort" data-filter="sort">
+  <button class="filter-trigger" type="button">
+    <span class="filter-label mono">↓</span>
+    <span class="filter-value">По дате</span>
+    <span class="filter-caret">▾</span>
+  </button>
+  <div class="filter-popover">
+    <button class="popover-item is-active" data-value="date">По дате (новые)</button>
+    <button class="popover-item" data-value="grade">По грейду (Head → Junior)</button>
+  </div>
+</div>
+
+</div>
+
+<div class="toolbar">
+  <span class="search-indicator mono" id="search-indicator" hidden>поиск: «<span id="search-indicator-q"></span>»</span>
+</div>
+
+<main class="vacancies" id="vacancies"></main>
+
+<footer class="page-footer">
+  <p class="mono">tg_digest · собрано из папки Telegram, обновляется ежедневно</p>
+  <p class="mono" id="visitor-count" hidden></p>
+</footer>
+
+<div class="modal-overlay" id="modal-overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" id="modal-close" type="button" aria-label="Закрыть">×</button>
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+</div>
+
+<script type="application/json" id="digest-tags">{{ tags_json | safe }}</script>
+<script type="application/json" id="vacancies-data" data-archive-after-days="{{ archive_after_days }}" data-generated-at="{{ generated_at }}">{{ data_json | safe }}</script>
+{%- if goatcounter_site %}
+<script>window.GOATCOUNTER_ENDPOINT = "https://{{ goatcounter_site }}.goatcounter.com/count";</script>
+<script data-goatcounter="https://{{ goatcounter_site }}.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+{%- endif %}
+<script src="static/app.js?v={{ asset_v }}" defer></script>
+</body>
+</html>
